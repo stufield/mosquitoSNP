@@ -1,0 +1,15 @@
+SpotType	ControlType	ProbeName	GeneName	colour
+detoxtarget	0	AG_DETOX_P*	*	brown
+immunitytarget	0	AG_IDB_P*	*	blue
+WGtarget	0	A_90_P*	*	black
+CV	0	CV_A_90_P*	*	yellow
+Brightcorner	1	*BrightCorner	*	orange
+Darkcorner	1	DarkCorner	*	grey
+positivecontrol	1	*	*	green
+negativecontrol	-1	*	NegativeControl	red
+
+
+
+
+
+

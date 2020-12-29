@@ -1,0 +1,133 @@
+\documentclass[12pt,a4paper]{article}
+%%%%%%%%%%%%%%%%%%
+\input{stuTeX}
+\usepackage[table]{xcolor}
+\usepackage{helvetica}
+%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%
+\title{PopGen Nucleotide Codons}
+\author{Stu Field}
+\date{}   % no date
+
+
+%%%%%%%%%%%%%%
+\begin{document}
+\maketitle
+
+\def \thesection{\Roman{section}}  % make roman numerals section #s
+
+%\begin{flushright}
+%	\hzline \\ \B{TimeStamp:} \timestamp \\ \hzline
+%\end{flushright}
+
+
+\def \xl{\multicolumn{1}{|c|}{}}
+%%%%%%%%%%%%%
+\section{Triplet Codon Chart}
+%%%%%%%%%%%%%
+\renewcommand{\arraystretch}{2}
+\begin{table}[H]
+%\centering
+\tabcolsep=0.33cm
+\belowcaptionskip=0.5cm
+%\caption{Triplet Codons}
+\begin{tabular}{| c || c c | c c | c c | c c || c |}
+\hline\hline
+& \multicolumn{2}{c|}{U} & \multicolumn{2}{c|}{C}
+& \multicolumn{2}{c|}{A} & \multicolumn{2}{c|}{G} & \\
+%
+\hline\hline
+\cline{2-9}
+\multirow{4}{*}{U} & UUU & \multicolumn{1}{|c|}{\multirow{2}{*}{Phe (F)}}& UCU & \multicolumn{1}{|c|}{\multirow{4}{*}{Ser (S)}} & UAU & \multicolumn{1}{|c|}{\multirow{2}{*}{Tyr (Y)}} & UGU & \multicolumn{1}{|c|}{\multirow{2}{*}{Cys (C)}} & U \\
+%%%
+& UUC &\xl& UCC &\xl& UAC &\xl& UGC & \xl & C \\ \cline{2-3} \cline{6-9}
+%%%
+& UUA & \multicolumn{1}{|c|}{\multirow{2}{*}{Leu (L)}} & UCA &\xl& UAA & \multicolumn{1}{|c|}{\cellcolor{red}} & UGA & \multicolumn{1}{|c|}{\cellcolor{red}STOP} & A \\ \cline{8-9}
+%%%
+& UUG &\xl& UCG &\xl& UAG & \multicolumn{1}{|c|}{\multirow{-2}{*}{\cellcolor{red}STOP}} & UGG & \multicolumn{1}{|c|}{Trp (W)} & G \\
+ \hline\hline
+%%%
+%%%
+%%%
+%%%
+\multirow{4}{*}{C} & CUU & \multicolumn{1}{|c|}{\multirow{4}{*}{Leu (L)}} & CCU & \multicolumn{1}{|c|}{\multirow{4}{*}{Pro (P)}} & CAU & \multicolumn{1}{|c|}{\multirow{2}{*}{His (H)}} & CGU & \multicolumn{1}{|c|}{\multirow{4}{*}{Arg (R)}} & U \\
+%%%
+& CUC &\xl& CCC &\xl& CAC &\xl& CGC & \xl & C \\ \cline{6-7}
+%%%
+& CUA &\xl& CCA &\xl& CAA & \multicolumn{1}{|c|}{\multirow{2}{*}{Gln (Q)}} & CGA & \xl & A \\
+%%%
+& CUG &\xl& CCG &\xl& CAG &\xl& CGG & \xl & G \\ \hline\hline
+C
+%%%
+%%%
+%%%
+\multirow{4}{*}{A} & AUU & \multicolumn{1}{|c|}{\multirow{3}{*}{Ile (I)}} & ACU & \multicolumn{1}{|c|}{\multirow{4}{*}{Thr (T)}} & AAU & \multicolumn{1}{|c|}{\multirow{2}{*}{Asn (N)}} & AGU & \multicolumn{1}{|c|}{\multirow{2}{*}{Ser (S)}} & U \\
+%%%
+& AUC &\xl& ACC &\xl& AAC &\xl& AGC & \xl & C \\ \cline{6-9}
+%%%
+& AUA &\xl& ACA &\xl& AAA & \multicolumn{1}{|c|}{\multirow{2}{*}{Lys (K)}} & AGA & \multicolumn{1}{|c|}{\multirow{2}{*}{Arg (R)}}  & A \\ \cline{2-3}
+%%%
+& AUG & \multicolumn{1}{|c|}{\cellcolor{green}Met (M)} & ACG &\xl& AAG &\xl& AGG & \xl & G \\ \hline\hline
+%%%
+%%%
+%%%
+%%%
+\multirow{4}{*}{G} & GUU & \multicolumn{1}{|c|}{\multirow{4}{*}{Val (V)}} & GCU & \multicolumn{1}{|c|}{\multirow{4}{*}{Ala (A)}} & GAU & \multicolumn{1}{|c|}{\multirow{2}{*}{Asp (D)}} & GGU & \multicolumn{1}{|c|}{\multirow{4}{*}{Gly (G)}} & U \\
+%%%
+& GUC &\xl& GCC &\xl& GAC &\xl& GGC & \xl & C \\ \cline{6-7}
+%%%
+& GUA &\xl& GCA &\xl& GAA & \multicolumn{1}{|c|}{\multirow{2}{*}{Glu (E)}} & GGA & \xl & A \\
+%%%
+& GUG &\xl& GCG &\xl& GAG &\xl& GGG & \xl & G \\ \hline\hline
+\end{tabular}
+\label{tab:df}
+\end{table}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%
+\section{Ambiguity Codes}
+%%%%%%%%%%%%%%%
+\renewcommand{\arraystretch}{1}
+\begin{table}[H]
+\centering
+\belowcaptionskip=0.5cm
+\caption{PopGen Ambiguity Codes}
+\begin{tabular}{l c}
+\hline \\
+Nucleotide(s) & Code \\[10pt]
+\hline\hline \\
+A 			&	A 	\\
+C 			&	C 	\\
+G 			&	G 	\\
+T 			&	T 	\\
+U 			&	U 	\\ 
+AC 		&	M 	\\
+AG 		&	R 	 \\
+AT 		&	W 	\\
+CG 		&	S 	\\
+CT 		&   Y \\
+GT 		&   K \\ 
+ACG 		&   V \\
+ACT 		&   H \\
+AGT 		&   D \\
+CGT 		&   B \\ 
+ACGT 		&   X/N \\
+not ACGT & 	 $\cdot$ \\[10pt]
+\hline
+\end{tabular}
+\label{tab:df}
+\end{table}
+
+
+\vfill
+\noi \hzline \\ \centering{\B{Last updated: }\today}
+
+
+\end{document}
+
+
+

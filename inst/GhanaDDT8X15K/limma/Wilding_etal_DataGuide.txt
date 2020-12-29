@@ -1,0 +1,58 @@
+
+
+Wilding et al.  Key to all data files.
+
+All data for publications are in folder "c:\Martin\Data\Craig\Tororo microarray complete\Data"
+
+The R code to analyse these data is in the file  "c:\Martin\Data\Craig\Tororo microarray complete"
+
+The folder "C:\....\Data" contains all data obtained from Craig on the 2nd November 2010
+
+Changes made to the names of files within the parent folder "C:\....\Data"
+
+Tororo_Targets2 .txt was duplicated and renamed Targets.txt
+
+TororoSpotTypes.txt was duplicated and renamed SpotTypes.txt
+
+Tororo_design_file2.txt was duplicated and renamed Designfile.txt
+
+After running through Limma the output file for importation into Maanova was called "Tororo.txt"
+
+
+
+
+Within analysis at present the stipulation is loess background 50
+
+The script to import data into J/maanova was:
+Tororo <- read.madata(datafile="C:\\Martin\\Data\\Craig\\Tororo microarray complete\\Data\\Tororo.txt",
+             designfile="C:\\Martin\\Data\\Craig\\Tororo microarray complete\\Data\\Designfile.txt",
+             arrayType="twoColor", header=TRUE, spotflag=TRUE, n.rep=1, metarow=9, metacol=10,
+             row=7, col=8, probeid=1, intensity=11, log.trans=TRUE)
+
+Note the change in metarow and metacol positions relative to previous versions. No prelication of probes in 8x15K array (replication within genes is present) 
+
+The script to fit a model was:
+Tororo.Fit <- fitmaanova(madata=Tororo, formula=~Array+Dye+Sample+Group, random=~Array+Sample,
+                         method="REML", verbose=TRUE, subCol=FALSE)
+
+Model test was based on a single permutation without replication
+Tororo.Result <- matest(data=Tororo, anovaobj=Tororo.Fit, term="Group", test.type="ttest",
+                        Contrast=new("matrix", nrow=3, ncol=3, byrow=TRUE,
+                        c(-1.0, 1.0, 0.0, 0.0, -1.0, 1.0, -1.0, 0.0, 1.0)),
+                        MME.method="REML", n.perm=1, verbose=FALSE)
+
+
+
+
+#log2 transformation of the data, 8x15 K = no reps
+
+Subfunctions are all in separate scripts and are accessed with a "master" script that calls them and manipulates the raw data called "EHH Analysis - Ghana iAChE.r". At the header, you'll have to change the paths at the top to wherever you put the subfunctions in source() at present this is “c:\Martin\Data\iACHE\ EHH analysis\R Functions” . The setwd() has to set the path to where the data is at present this is "c:\Martin\Data\iACHE\ EHH analysis\" 
+
+The bootstrap values in csv format are called  "Ghana iAChE (plus the date).csv"
+
+I cut and paste these data into the Sigmaplot file "Bootstrapped EHH plots.JNB" to produce the bootstrapped EHH plots. You can get the base pair positions from the "SNP.snp" file if you want to plot vs bp rather than using a categorical abscissa.
+
+
+
+
+
