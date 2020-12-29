@@ -1,0 +1,38 @@
+Package: mosquitoSNP
+Type: Package
+Title: mosquitoSNP
+Version: 1.0
+Date: 2027-01-01
+Author: Stu Field
+Authors@R: c(
+    person(given = "Stu",
+           family = "Field",
+           email = "stu.g.field@gmail.com",
+           role = c("aut", "cre")
+           ),
+    person(given = "Martin",
+           family = "Donnelly",
+           email = "m.j.donnelly@liv.ac.uk",
+           role = "aut"
+           ),
+    person(given = "Bill",
+           family = "Black",
+           email = "William.Black@colostate.edu",
+           role = "aut")
+  )
+Description: Full suite of all defined functions & data developed 
+    by Stu Field and Martin Donnelly during the Fall 2010 for the 
+    analysis of genetic data of insecticide resistant mosquito 
+    populations in Africa. (adegenet, pegas).
+License: MIT + file LICENSE
+Depends: 
+    R (>= 3.0.0)
+Imports:
+    gplots
+Suggests:
+    limma
+Encoding: UTF-8
+LazyLoad: yes
+LazyData: yes
+BuildVignettes: false
+RoxygenNote: 7.1.1
