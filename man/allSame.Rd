@@ -8,10 +8,10 @@ allSame(x)
 }
 \arguments{
 \item{x}{A numeric or character vector or a matrix that could be converted
-to a vector}
+to a vector.}
 }
 \value{
-A logical value indicating if all values in the vector are identical
+A logical value indicating if all values in the vector are identical.
 }
 \description{
 Determine if all entries of a vector are identical. Can work on a matrix
@@ -21,9 +21,6 @@ also because matrix could be converted to a vector.
 allSame(1:15)
 allSame(rep("DOG", 10))
 allSame(diag(5))
-}
-\seealso{
-\code{\link{identical}}
 }
 \author{
 Stu Field

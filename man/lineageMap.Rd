@@ -13,18 +13,14 @@ lineageMap(data, core, csv = FALSE, file)
 
 \item{csv}{Write a csv output file of the resulting lineage map?}
 
-\item{file}{Character. If `csv = TRUE`, the name of the output file.
-Otherwise ignored.}
+\item{file}{Character. If `csv = TRUE`, the name of the output file.}
 }
 \value{
 A list containing:
 \item{SNP.Data}{Original SNP data.}
-\item{Haplotypes}{The number of haplotypes lineages left & right of the
-core}
-\item{Lineages}{Table showing the number of haplotypes in each
-lineage}
-\item{Haplo.Lineages}{The actual lineage map; ordered from top
-to bottom}
+\item{Haplotypes}{The number of haplotypes lineages left & right of the core.}
+\item{Lineages}{Table showing the number of haplotypes in each lineage.}
+\item{Haplo.Lineages}{The actual lineage map; ordered from top to bottom.}
 }
 \description{
 Creates a lineage map of a given data set as part of the Extended Haplotype

@@ -1,10 +1,10 @@
 #' Genetic analysis of mosquito SNP data
 #'
-#' Full suite of all defined functions & data developed by Stu Field and
+#' A suite of functions & data developed by Stu Field and
 #' Martin Donnelly during the Fall 2010 for the analysis of genetic data
 #' of insecticide resistant mosquito populations in Africa.
 #'
-#' Some functionality may depend the \code{\link[limma]{limma}} package,
+#' Some functionality may depend the \pkg{limma} package,
 #' which is suggested but not required.
 #' Limma must be downloaded from BioConductor:\cr
 #'
@@ -58,10 +58,9 @@
 #'
 #' @keywords package
 #' @examples
-#'
+#' \dontrun{
 #' ambiguityCodons
 #' codons
 #' head(HarrCraigData)
-#'
+#' }
 NULL
-

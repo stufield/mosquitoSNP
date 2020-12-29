@@ -23,7 +23,7 @@ Not always used so default is set to c(1, 1).}
 A data frame containing all the desired array data.
 }
 \description{
-Reorganize array data into a data frame. Uses \code{\link{cbind}} to combine
+Reorganize array data into a data frame. Uses [cbind()] to combine
 arrays horizontally with Probe ID running down column 1. Each array
 red-signal green-signal weighting for probe running horizontally for each of
 the arrays

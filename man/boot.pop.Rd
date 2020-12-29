@@ -13,7 +13,7 @@ boot.pop(x, loci, pops, phenotypes, rseed = sample(1000, 1))
 
 \item{pops}{A factor variable of the populations}
 
-\item{phenotypes}{Phenotypes of the population. Usually R/S}
+\item{phenotypes}{Phenotypes of the population. Usually "R" and "S".}
 
 \item{rseed}{Optional for reproducibility}
 }
@@ -25,8 +25,8 @@ Create bootstrap population of phenotypes
 }
 \examples{
 # add example
-\dontrun{}
+\dontrun{a <- 1}
 }
 \author{
-Stu Field, Martin Donnelly
+Stu Field and Martin Donnelly
 }

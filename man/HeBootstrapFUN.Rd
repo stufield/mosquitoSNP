@@ -7,7 +7,7 @@
 HeBootstrapFUN(x, nboot, LociCols)
 }
 \arguments{
-\item{x}{Microsatellite data object (usually data frame). See example.}
+\item{x}{A `Microsatellite` data object (a `data.frame` or `tibble`). See example.}
 
 \item{nboot}{Number of bootstrap replicates.}
 
@@ -15,10 +15,10 @@ HeBootstrapFUN(x, nboot, LociCols)
 }
 \value{
 A list containing:
-\item{estimate }{The empirical estimate of heterozygosity by population
-and by phenotype}
-\item{upperCI9 }{upper confidence limit of the heterozygosity estimate}
-\item{lowerCI95 }{lower confidence limit of the heterozygosity estimate}
+\item{estimate}{The empirical estimate of heterozygosity by population
+and by phenotype.}
+\item{lowerCI95}{lower confidence limit of the heterozygosity estimate.}
+\item{upperCI9}{upper confidence limit of the heterozygosity estimate.}
 }
 \description{
 Conduct bootstrap analysis on heterozygosity microsatellite data for
@@ -36,7 +36,7 @@ Locusnames <- c("L3RIH59", "L3RIND30", "L3RIR01", "L3RIR02",
                 "L3RIR03", "L3RIR04", "L3RIR05", "L3RIR07",
                 "L3RIR08", "L3RIR09", "L3RIR10", "L3RIR12")
 
-MicroData <- formatMicrosat(HarrCraigData, col.loci = 4:27, locus.names = Locusnames)
+MicroData <- formatMicrosat(HarrCraigData, Locusnames)
 
 # exclude Alajo and Malawi because:
 # no Alajo|S and no Malawi|R
@@ -45,13 +45,12 @@ MicroData <- subset(MicroData, Population != "Alajo" & Population != "Malawi")
 head(MicroData)
 
 HeBootstrapFUN(MicroData, nboot = 100, LociCols = 4:15)
-
 }
 \references{
 Harr Craig microsatellite data
 }
 \seealso{
-\code{\link{HeFUN}}, \code{\link{boot.pop}}
+[HeFUN()], [boot.pop()]
 }
 \author{
 Stu Field, Martin Donnelly

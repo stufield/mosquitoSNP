@@ -1,9 +1,11 @@
 
 #' Borrowed functions from the pegas package
+#' But heavily modified/simplified
 
+
+#' @importFrom tibble as_tibble
 #' @noRd
-convert2loci <- function(x, allele.sep = "/|", col.pop = NULL,
-                         col.loci = NULL) {
+as.loci2 <- function(x, allele.sep = "/|", col.pop = NULL, col.loci = NULL) {
 
   if ( is.null(col.pop) ) {
     ipop <- which(tolower(names(x)) == "population")
@@ -16,7 +18,7 @@ convert2loci <- function(x, allele.sep = "/|", col.pop = NULL,
   }
   if ( is.numeric(col.pop) ) {
     names(x)[col.pop] <- "population"
-    x[, col.pop] <- factor(x[, col.pop])
+    x$population %<>% factor()
   }
   if ( is.null(col.loci) ) {
     col.loci <- 1:ncol(x)
@@ -35,21 +37,22 @@ convert2loci <- function(x, allele.sep = "/|", col.pop = NULL,
       levels(x[, i]) <- gsub(allele.sep, "/", levels(x[, i]))
     }
   }
-  class(x) <- c("loci", "data.frame")
-  attributes(x)$locicol <- col.loci
-  checkOrderAlleles(x)
+  x <- checkOrderAlleles(x)
+  x <- tibble::as_tibble(x)
+  structure(x, class = c("loci2", class(x)), locicol = col.loci)
 }
 
 #' @noRd
 checkOrderAlleles <- function (x) {
 
+  # internal closure
   reorderAlleles <- function(x) {
     for ( i in seq_along(x) ) {
       y <- x[i]
-      if (!length(grep("/", y))) 
+      if (!length(grep("/", y)))
         next
       y <- unlist(strsplit(y, "/"))
-      y <- paste(.sortAlleles(y), collapse="/")
+      y <- paste(.sortAlleles(y), collapse = "/")
       x[i] <- y
     }
     return(x)
@@ -84,42 +87,32 @@ checkOrderAlleles <- function (x) {
 }
 
 #' @noRd
-summaryLoci <- function(object) {
-  L <- attributes(object)$locicol
-  ans <- vector("list", length(L))
-  names(ans) <- names(object[L])
-  ii <- 1L
-  for ( i in L ) {
-    geno <- levels(object[, i])
-    alle <- strsplit(geno, "[/|]") 
-    unialle <- sort(unique(unlist(alle))) 
-    l <- tabulate(object[, i], length(geno))
-    names(l) <- geno
-    tab <- matrix(0, length(unialle), length(geno),
-                  dimnames=list(unialle, geno))
-    for ( j in seq_along(alle) ) {
-      for ( k in alle[[j]] ) {
-        tab[k, j] <- tab[k, j] + 1
-      }
-    }
-    ans[[ii]] <- list(genotype=l, allele=drop(tab %*% l))
-    ii <- ii + 1L
-  }
-  class(ans) <- c("summaryLoci", class(ans))
-  return(ans)
+#' @importFrom purrr map set_names
+#' @export
+summary.loci2 <- function(object, ...) {
+  names(object)[attr(object, "locicol")] %>%
+    purrr::set_names() %>%
+    purrr::map(~ {
+      .vec <- as.character(object[[.x]])
+      list(genotype = c(table(.vec)),
+           allele   = strsplit(.vec, "[/|]") %>% unlist() %>% table() %>% c()
+      )
+    }) %>%
+    structure(class = c("summaryLoci", "list"))
 }
 
 #' @noRd
+#' @importFrom usethis ui_value ui_todo ui_line
+#' @importFrom purrr walk
+#' @export
 print.summaryLoci <- function (x, ...) {
-  nms <- names(x)
-  for (i in 1:length(x)) {
-    cat("Locus", nms[i], ":\n")
-    cat("-- Genotype frequencies:\n")
-    print(x[[i]][[1]])
-    cat("-- Allele frequencies:\n")
-    print(x[[i]][[2]])
+  purrr::walk(names(x), ~ {
+    usethis::ui_todo("Locus {ui_value(.x)}:")
+    usethis::ui_line("-- Genotype frequencies:")
+    print(x[[.x]]$genotype)
+    usethis::ui_line("-- Allele frequencies:")
+    print(x[[.x]]$allele)
     cat("\n")
-  }
+  })
   invisible(x)
 }
-

@@ -61,7 +61,7 @@ via bootstrapping method.
 1st col *must* be character class!
 }
 \note{
-Requires the \code{gplots} package.
+Requires the \pkg{gplots} package.
 
 If the bootstrap confidence interval is very short
 relative to the point estimate, [gplots::plotCI()] will give the
@@ -69,7 +69,6 @@ warning: `In arrows(...): zero-length arrow is of indeterminate
 angle and so skipped`.
 }
 \examples{
-
 head(KenyaSNP_EHHdata)   # pkg data
 
 # Subset data sets by Leu/Ser
@@ -78,14 +77,13 @@ data.Ser <- subset(KenyaSNP_EHHdata, KenyaSNP_EHHdata == "Ser")
 
 SNPboot(data.Leu, nBoot = 50, core = 21)  # nBoot >500 recommended
 SNPboot(data.Ser, nBoot = 25, core = 21)
-
 }
 \references{
 "Kenyan_SNP_EHH_Data.csv"
 }
 \seealso{
-\code{\link{boot.pop}}, [HeBootstrapFUN()],
-gplots::plotCI()], [lineageMap()], [quantile()]
+[boot.pop()], [HeBootstrapFUN()], [gplots::plotCI()],
+[lineageMap()], [quantile()]
 }
 \author{
 Stu Field, Martin Donnelly

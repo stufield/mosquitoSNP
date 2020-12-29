@@ -4,15 +4,13 @@
 \alias{formatMicrosat}
 \title{Convet Microsatellite Data Format}
 \usage{
-formatMicrosat(rawdata, col.loci, locus.names)
+formatMicrosat(rawdata, locus.names)
 }
 \arguments{
 \item{rawdata}{Raw microsattellite data containing separate columns for each
 of the diploid loci. Converts to a "/" separating the diploid alleles.}
 
-\item{col.loci}{Defining the columns which contain microsat data.}
-
-\item{locus.names}{Names of the microsat loci}
+\item{locus.names}{Names of the microsat loci to combine.}
 }
 \value{
 Matrix of microsatellite data with "/" as the allele separator,
@@ -29,10 +27,7 @@ Locusnames <- c("L3RIH59", "L3RIND30", "L3RIR01", "L3RIR02",
                 "L3RIR08", "L3RIR09", "L3RIR10", "L3RIR12")
 
 # Reformat
-FormattedData <- formatMicrosat(HarrCraigData, col.loci = 4:27,
-                                locus.names = Locusnames)
-head(FormattedData)
-
+formatMicrosat(HarrCraigData, Locusnames)
 }
 \references{
 "inst/HarrCraig.csv"

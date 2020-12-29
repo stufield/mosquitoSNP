@@ -11,13 +11,13 @@ DNAtranslate(x, csv = FALSE, file)
 
 \item{csv}{Logical. Create a csv output file?}
 
-\item{file}{Character. Name of the csv output file if desired}
+\item{file}{Character. Name of the csv output file if desired.}
 }
 \value{
 A list containing:
-\item{DNAsequence}{Original DNA sequence}
-\item{AAsequence}{Translated AA sequence based on DNA sequence}
-\item{TranslationTable}{Table combining in nice format}
+\item{DNAsequence}{Original DNA sequence.}
+\item{AAsequence}{Translated AA sequence based on DNA sequence.}
+\item{TranslationTable}{Table combining in nice format.}
 }
 \description{
 Translate a sequence of DNA nucleotides to AA sequence.
@@ -37,8 +37,8 @@ AAtranslate("YRY")
 DNAtranslate(DNAseq, csv = FALSE)
 }
 \seealso{
-\code{\link{AAtranslate}}, \code{\link{searchReplace}}
+[AAtranslate()], [searchReplace()]
 }
 \author{
-Stu Field, Martin Donnelly, Bill Black
+Stu Field, Martin Donnelly and Bill Black
 }

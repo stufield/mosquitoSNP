@@ -28,7 +28,13 @@ License: MIT + file LICENSE
 Depends: 
     R (>= 3.0.0)
 Imports:
-    gplots
+    gplots,
+    purrr,
+    tibble,
+    tidyr,
+    tidyselect,
+    usethis,
+    magrittr
 Suggests:
     limma
 Encoding: UTF-8

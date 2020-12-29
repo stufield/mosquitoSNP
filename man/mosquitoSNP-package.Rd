@@ -6,12 +6,12 @@
 \alias{mosquito}
 \title{Genetic analysis of mosquito SNP data}
 \description{
-Full suite of all defined functions & data developed by Stu Field and
+A suite of functions & data developed by Stu Field and
 Martin Donnelly during the Fall 2010 for the analysis of genetic data
 of insecticide resistant mosquito populations in Africa.
 }
 \details{
-Some functionality may depend the \code{\link[limma]{limma}} package,
+Some functionality may depend the \pkg{limma} package,
 which is suggested but not required.
 Limma must be downloaded from BioConductor:\cr
 
@@ -33,11 +33,11 @@ as non-exported code and included in a file `pegas.R`.
 }
 
 \examples{
-
+\dontrun{
 ambiguityCodons
 codons
 head(HarrCraigData)
-
+}
 }
 \references{
 Martin J. Donnelly \cr

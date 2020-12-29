@@ -62,13 +62,13 @@ AAtranslate <- function(x) {
 #'
 #' @param x A vector of DNA sequence for translation into AA sequence.
 #' @param csv Logical. Create a csv output file?
-#' @param file Character. Name of the csv output file if desired
+#' @param file Character. Name of the csv output file if desired.
 #' @return A list containing:
-#' \item{DNAsequence}{Original DNA sequence}
-#' \item{AAsequence}{Translated AA sequence based on DNA sequence}
-#' \item{TranslationTable}{Table combining in nice format}
-#' @author Stu Field, Martin Donnelly, Bill Black
-#' @seealso \code{\link{AAtranslate}}, \code{\link{searchReplace}}
+#' \item{DNAsequence}{Original DNA sequence.}
+#' \item{AAsequence}{Translated AA sequence based on DNA sequence.}
+#' \item{TranslationTable}{Table combining in nice format.}
+#' @author Stu Field, Martin Donnelly and Bill Black
+#' @seealso [AAtranslate()], [searchReplace()]
 #' @examples
 #' chunk1 <- c("YYYAAGATCGTCGGTGGCGATGAGGCCGAAGCGCACGAATTTCCCTACCAAATCTCG")
 #' chunk2 <- c("CTGCAGTGGAACTTCAACGATGGACAAACGGAGACCATGCACTTCTGYGGAGCTTCGG")
@@ -113,10 +113,9 @@ DNAtranslate <- function(x, csv = FALSE, file) {
 #' also because matrix could be converted to a vector.
 #'
 #' @param x A numeric or character vector or a matrix that could be converted
-#' to a vector
-#' @return A logical value indicating if all values in the vector are identical
+#' to a vector.
+#' @return A logical value indicating if all values in the vector are identical.
 #' @author Stu Field
-#' @seealso \code{\link{identical}}
 #' @examples
 #' allSame(1:15)
 #' allSame(rep("DOG", 10))
@@ -129,7 +128,7 @@ allSame <- function(x) {
 
 #' Array Data to Data Frame
 #'
-#' Reorganize array data into a data frame. Uses \code{\link{cbind}} to combine
+#' Reorganize array data into a data frame. Uses [cbind()] to combine
 #' arrays horizontally with Probe ID running down column 1. Each array
 #' red-signal green-signal weighting for probe running horizontally for each of
 #' the arrays
@@ -173,9 +172,9 @@ array2df <- function(x, names, Meta = c(1, 1), probechar = 13) {
   n <- ncol(X)
   append <- c("R", "G", "W")    # append colnames with R, G, or W
   for ( j in 1:length(append) ) {
-    names(X)[seq(L+j, n, 3)] <- paste(names(X)[seq(L+j, n, 3)], append[j], sep = ".")
+    names(X)[seq(L + j, n, 3)] <- paste(names(X)[seq(L + j, n, 3)], ".", append[j])
   }
-  cat("* Combining", i, "arrays\n")
+  usethis::ui_done("Combining {ui_value(i)} arrays")
   X$ProbeName <- substr(X$ProbeName, 1, probechar) # cut off ProbeName to max 13 char (default)
   return(X)
 }
@@ -188,13 +187,13 @@ array2df <- function(x, names, Meta = c(1, 1), probechar = 13) {
 #' @param x The original vector of population data
 #' @param loci The loci present in the population
 #' @param pops A factor variable of the populations
-#' @param phenotypes Phenotypes of the population. Usually R/S
+#' @param phenotypes Phenotypes of the population. Usually "R" and "S".
 #' @param rseed Optional for reproducibility
 #' @return A bootstrap population based on the original population data
-#' @author Stu Field, Martin Donnelly
+#' @author Stu Field and Martin Donnelly
 #' @examples
 #' # add example
-#' \dontrun{}
+#' \dontrun{a <- 1}
 #' @export boot.pop
 boot.pop <- function(x, loci, pops, phenotypes, rseed = sample(1000, 1)) {
 
@@ -215,7 +214,6 @@ boot.pop <- function(x, loci, pops, phenotypes, rseed = sample(1000, 1)) {
 }
 
 
-
 #' Find and Calculate SNPs
 #'
 #' Determine the relative positions of SNPs for variable SNP data.
@@ -226,10 +224,9 @@ boot.pop <- function(x, loci, pops, phenotypes, rseed = sample(1000, 1)) {
 #'
 #' @param x A matrix of raw SNP data, individuals as rows & loci as cols.
 #' @return A list containing:
-#' \item{Data }{The raw data reorganized as a matrix. Individuals as rows.
-#' Loci as cols}
-#' \item{Individuals }{Number of individuals in the data set. Equal to
-#' nrows}
+#' \item{Data}{The raw data reorganized as a matrix. Individuals as rows.
+#'   Loci as columns.}
+#' \item{Individuals }{Number of individuals in the data set. Equal to `nrows`.}
 #' \item{Length}{Length of the SNP sequence. Equal to ncol}
 #' \item{nSNP}{Number of SNPs in the data set}
 #' \item{SNPs}{Position of the SNP loci, identified by the col number}
@@ -243,12 +240,12 @@ boot.pop <- function(x, loci, pops, phenotypes, rseed = sample(1000, 1)) {
 findSNPs <- function(x) {
 
   ntd <- nchar(x)
-  X <- matrix(NA, nrow = nrow(x), ncol = ntd,
-              dimnames = list(c(rownames(x)), c(1:ntd)))
+  X   <- matrix(NA, nrow = nrow(x), ncol = ntd,
+                dimnames = list(c(rownames(x)), c(1:ntd)))
 
   # separate characters into vector entries
   for ( i in 1:nrow(x) ) {
-    X[i,] <- substring(x[i,], 1:ntd, 1:ntd)
+    X[i, ] <- substring(x[i, ], 1:ntd, 1:ntd)
   }
 
   # Remove dashed individuals
@@ -265,7 +262,6 @@ findSNPs <- function(x) {
 }
 
 
-
 #' Convet Microsatellite Data Format
 #'
 #' Convert adjacent microsatellite data from separate columns for each of the
@@ -273,8 +269,7 @@ findSNPs <- function(x) {
 #'
 #' @param rawdata Raw microsattellite data containing separate columns for each
 #' of the diploid loci. Converts to a "/" separating the diploid alleles.
-#' @param col.loci Defining the columns which contain microsat data.
-#' @param locus.names Names of the microsat loci
+#' @param locus.names Names of the microsat loci to combine.
 #' @return Matrix of microsatellite data with "/" as the allele separator,
 #' rather than separate cols for alleles.
 #' @author Stu Field
@@ -287,35 +282,18 @@ findSNPs <- function(x) {
 #'                 "L3RIR08", "L3RIR09", "L3RIR10", "L3RIR12")
 #'
 #' # Reformat
-#' FormattedData <- formatMicrosat(HarrCraigData, col.loci = 4:27,
-#'                                 locus.names = Locusnames)
-#' head(FormattedData)
-#'
-#' @importFrom utils tail
+#' formatMicrosat(HarrCraigData, Locusnames)
+#' @importFrom tidyr unite
+#' @importFrom tidyselect starts_with
+#' @importFrom tibble as_tibble
 #' @export formatMicrosat
-formatMicrosat <- function(rawdata, col.loci, locus.names) {
-
-  col.1    <- col.loci[1L]              # first locus col
-  col.x    <- tail(col.loci, 1)        # final locus col
-  Y        <- rawdata[, 1:(col.1 - 1)]
-  locibind <- seq(col.1, col.x - 1, 2)   # loci to bind
-
-  if ( length(locibind) %% 2 != 0 ) {
-    stop("Odd number of Loci to bind")
+formatMicrosat <- function(rawdata, locus.names) {
+  x <- rawdata
+  for ( i in locus.names ) {
+    x <- tidyr::unite(x, col = !! i, starts_with(i), sep = "/")
   }
-
-  # paste & bind #
-  for ( i in locibind ) {
-    if ( i == locibind[1L] ) {
-      X <- paste(rawdata[, i], rawdata[, i + 1], sep = "/")
-    } else {
-      X <- cbind(X, paste(rawdata[, i], rawdata[, i + 1], sep = "/"))
-    }
-  }
-  colnames(X) <- locus.names
-  cbind(Y, X)
+  tibble::as_tibble(x)
 }
-
 
 
 #' Heterozygosity Bootstrapping
@@ -326,24 +304,24 @@ formatMicrosat <- function(rawdata, col.loci, locus.names) {
 #'
 #' Bootstrapping routine on original MicroData: HarrCraigData
 #'
-#' @param x Microsatellite data object (usually data frame). See example.
+#' @param x A `Microsatellite` data object (a `data.frame` or `tibble`). See example.
 #' @param nboot Number of bootstrap replicates.
 #' @param LociCols Which cols are microsatellite loci.
 #' @return A list containing:
-#' \item{estimate }{The empirical estimate of heterozygosity by population
-#' and by phenotype}
-#' \item{upperCI9 }{upper confidence limit of the heterozygosity estimate}
-#' \item{lowerCI95 }{lower confidence limit of the heterozygosity estimate}
+#' \item{estimate}{The empirical estimate of heterozygosity by population
+#' and by phenotype.}
+#' \item{lowerCI95}{lower confidence limit of the heterozygosity estimate.}
+#' \item{upperCI9}{upper confidence limit of the heterozygosity estimate.}
 #' @note Bootstrapping routine on original MicroData
 #' @author Stu Field, Martin Donnelly
-#' @seealso \code{\link{HeFUN}}, \code{\link{boot.pop}}
+#' @seealso [HeFUN()], [boot.pop()]
 #' @references Harr Craig microsatellite data
 #' @examples
 #' Locusnames <- c("L3RIH59", "L3RIND30", "L3RIR01", "L3RIR02",
 #'                 "L3RIR03", "L3RIR04", "L3RIR05", "L3RIR07",
 #'                 "L3RIR08", "L3RIR09", "L3RIR10", "L3RIR12")
 #'
-#' MicroData <- formatMicrosat(HarrCraigData, col.loci = 4:27, locus.names = Locusnames)
+#' MicroData <- formatMicrosat(HarrCraigData, Locusnames)
 #'
 #' # exclude Alajo and Malawi because:
 #' # no Alajo|S and no Malawi|R
@@ -352,11 +330,10 @@ formatMicrosat <- function(rawdata, col.loci, locus.names) {
 #' head(MicroData)
 #'
 #' HeBootstrapFUN(MicroData, nboot = 100, LociCols = 4:15)
-#'
 #' @importFrom stats quantile
 #' @export HeBootstrapFUN
-HeBootstrapFUN <- function(x, nboot, LociCols) {  # x = Microsat object
-   # general housekeeping #
+HeBootstrapFUN <- function(x, nboot, LociCols) {
+  # general housekeeping
   Popns     <- levels(factor(x$Population))  # used in boot.pop() below
   types     <- levels(factor(x$Phenotype))   # used in boot.pop()
   lociNames <- colnames(x[LociCols])         # used in boot.pop()
@@ -364,46 +341,47 @@ HeBootstrapFUN <- function(x, nboot, LociCols) {  # x = Microsat object
   ntypes    <- length(types)
   L         <- length(lociNames)
 
-  # Storage Array for Bootstrap Estimates of He ###
+  # Storage Array for Bootstrap Estimates of He
   HeArray <- array(NA, dim = c(L, nPops * ntypes, nboot))
   #print(dim(HeArray))
 
   # convert to loci; necessary for summary method nested within by()
-  y     <- convert2loci(x, col.pop = 2, col.loci = LociCols)
-  Sy    <- by(y, INDICES = list(y$population, y$Phenotype), FUN = summaryLoci)
-  EstHe <- sapply(Sy, function(i) sapply(i, function(j) HeFUN(j$allele)))
-  colnames(EstHe) <- paste(rep(Popns, ntypes), rep(types, each = nPops), sep = "|")
+  y     <- as.loci2(x, col.pop = 2, col.loci = LociCols)
+  Sy    <- by(y, INDICES = list(y$population, y$Phenotype), FUN = summary)
+  EstHe <- sapply(Sy, function(.i) sapply(.i, function(.j) HeFUN(.j$allele)))
+  colnames(EstHe) <- paste0(rep(Popns, ntypes), "|", rep(types, each = nPops))
   EstHe <- EstHe[, order(colnames(EstHe)) ]  # reorder columns alpha by types
 
   # Calculate He for each bootstrap popn
   for ( n in 1:nboot ) {
     if ( n%%10 == 0 ) {
-      cat("Bootstrap ...", n, "\n")
+      usethis::ui_done("Bootstrap ... {n}")
     }
 
     # Create bootstrapped dataset with replacement
     # and convert to "loci" object
-    Boot.x <- boot.pop(x, loci = lociNames, pops = Popns, phenotypes = types, rseed = n)
-    Boot.y <- convert2loci(Boot.x, col.pop = 2, col.loci = LociCols)
+    Boot_x <- boot.pop(x, loci = lociNames, pops = Popns, phenotypes = types, rseed = n)
+    Boot_y <- as.loci2(Boot_x, col.pop = 2, col.loci = LociCols)
 
     # Summarize MicroData by Popn, Phenotype, & locus
     # This is a list of each combination or Popn & Phenotype
     # with each element of the list containing a list of each Locus
-    S  <- by(Boot.y, INDICES = list(Boot.y$population, Boot.y$Phenotype), FUN = summaryLoci)
+    S  <- by(Boot_y, INDICES = list(Boot_y$population, Boot_y$Phenotype), FUN = summary)
     He <- sapply(S, function(i) sapply(i, function(j) HeFUN(j$allele)))
-    colnames(He) <- paste(rep(Popns, ntypes), rep(types, each = nPops), sep = "|")
+    colnames(He) <- paste0(rep(Popns, ntypes), "|", rep(types, each = nPops))
     He <- He[, order(colnames(He)) ]        # reorder columns alpha by types
     HeArray[,, n]     <- He                 # Store He for boot popn
     dimnames(HeArray) <- dimnames(EstHe)    # Conserve col/row names among EstHe and HeArray for indexing
   }
 
   # Calculate CI95s
-  lower <- apply(HeArray, 1:2, quantile, probs = 0.025) # c(1, 2) = by row & by col
-  upper <- apply(HeArray, 1:2, quantile, probs = 0.975)
+  # c(1, 2) = by row & by col
+  lower <- apply(HeArray, 1:2, quantile, probs = 0.025, names = FALSE)
+  upper <- apply(HeArray, 1:2, quantile, probs = 0.975, names = FALSE)
 
   list(estimate  = EstHe,
-       upperCI95 = upper,
-       lowerCI95 = lower)
+       lowerCI95 = lower,
+       upperCI95 = upper)
 }
 
 
@@ -413,26 +391,26 @@ HeBootstrapFUN <- function(x, nboot, LociCols) {  # x = Microsat object
 #' Calculate a heterozygosity estimate given a set of microsatellite data.
 #'
 #' This function is based on the Heterozygosity estimate function within the
-#' pegas package by Emmanuel Paradis. However Martin believed there was an
-#' error in the variance calculation so it was modified.
+#' \pkg{pegas} package by Emmanuel Paradis. However Martin Donnelly believed
+#' there was an error in the variance calculation so it was modified.
 #'
 #' @param x Microsatellite data.
-#' @param var Should variance also be computed according to: 2 * (2 * (n - 2) *
-#' (sp3 - sp2^2) + sp2 - sp2^2)/(n * (n - 1))
+#' @param var Should variance also be computed according to:
+#' \deqn{2 * (2 * (n - 2) * (sp3 - sp2^2) + sp2 - sp2^2)/(n * (n - 1))}
 #' @return A list containing:
-#' \item{H }{Point estimate of population heterozygosity}
-#' \item{var.H }{Variance associated with the point estimate}
-#' \item{n }{Number of samples used in the heterozygosity point estimate}
-#' @author Stu Field, Martin Donnelly
+#' \item{H}{Point estimate of population heterozygosity}
+#' \item{var.H}{Variance associated with the point estimate}
+#' \item{n}{Number of samples used in the heterozygosity point estimate}
+#' @author Stu Field and Martin Donnelly
 #' @seealso [HeBootstrapFUN()]
-#' @references Based on the Heterozygosity function in the pegas package by
-#' Emmanuel Paradis [pegas::pegas()].
+#' @references Based on the Heterozygosity function in the \pkg{pegas}
+#' package by Emmanuel Paradis.
 #' @examples
 #' Locusnames <- c("L3RIH59", "L3RIND30", "L3RIR01", "L3RIR02",
 #'                 "L3RIR03", "L3RIR04", "L3RIR05", "L3RIR07",
 #'                 "L3RIR08", "L3RIR09", "L3RIR10", "L3RIR12")
 #'
-#' MicroData <- formatMicrosat(HarrCraigData, col.loci = 4:27, locus.names = Locusnames)
+#' MicroData <- formatMicrosat(HarrCraigData, Locusnames)
 #'
 #' apply(MicroData[, 4:ncol(MicroData)], 2, HeFUN)
 #' apply(MicroData[, 4:ncol(MicroData)], 2, HeFUN, var = TRUE)
@@ -441,12 +419,12 @@ HeFUN <- function(x, var = FALSE) {
 
   if ( !is.factor(x) ) {
     if ( is.numeric(x) ) {
-      x <- x[ names(x)!="NA" ] # remove NAs
+      x <- x[ names(x) != "NA" ] # remove NAs
       n <- sum(x)
       k <- length(x)
       freq <- x / n
     } else {
-      x <- factor(x)
+      x %<>% factor()
     }
    }
 
@@ -455,15 +433,15 @@ HeFUN <- function(x, var = FALSE) {
     k    <- nlevels(x)
     freq <- table(x) / n
   }
-  sp2  <- sum(freq^2)
-  H    <- n * (1 - sp2) / (n - 1)
+  sp2 <- sum(freq^2)
+  H   <- n * (1 - sp2) / (n - 1)
 
   if ( var ) {
     sp3   <- sum(freq^3)
-    var.H <- 2 * (2 * (n - 2) * (sp3 - sp2^2) + sp2 - sp2^2) / (n * (n - 1))
-    return(c(H, var.H, n))
+    var_H <- 2 * (2 * (n - 2) * (sp3 - sp2^2) + sp2 - sp2^2) / (n * (n - 1))
+    c(H = H, varH = var_H, n = n)
   } else {
-    return(H)
+    H
   }
 }
 
@@ -478,15 +456,11 @@ HeFUN <- function(x, var = FALSE) {
 #' @param core Set the nucleotide position of the core.
 #' @param csv Write a csv output file of the resulting lineage map?
 #' @param file Character. If `csv = TRUE`, the name of the output file.
-#' Otherwise ignored.
 #' @return A list containing:
 #' \item{SNP.Data}{Original SNP data.}
-#' \item{Haplotypes}{The number of haplotypes lineages left & right of the
-#' core}
-#' \item{Lineages}{Table showing the number of haplotypes in each
-#' lineage}
-#' \item{Haplo.Lineages}{The actual lineage map; ordered from top
-#' to bottom}
+#' \item{Haplotypes}{The number of haplotypes lineages left & right of the core.}
+#' \item{Lineages}{Table showing the number of haplotypes in each lineage.}
+#' \item{Haplo.Lineages}{The actual lineage map; ordered from top to bottom.}
 #' @author Stu Field, Martin Donnelly
 #' @seealso [allSame()], [SNPboot()]
 #' @examples
@@ -515,7 +489,7 @@ lineageMap <- function(data, core, csv = FALSE, file) {
   Map   <- matrix(0, n, sites, dimnames = list(rownames(data), SNPnames))
   Map[, core] <- rep(1, n)
 
-  # Centromeric # Left <- ----
+  # Centromeric # Left <- ---- #
   for ( i in (core-1):1 ) {
     if ( allSame(data[, i]) ) {
       Map[, i] <- Map[, i + 1]
@@ -523,7 +497,6 @@ lineageMap <- function(data, core, csv = FALSE, file) {
     } else {
       lineages  <- names(sort(table(Map[, i + 1]), decreasing = TRUE))
       nlineages <- length(lineages)
-
       for ( k in 1:nlineages ) {
         lineage.index <- which(Map[, i + 1] == lineages[k])
         nextSNP <- data[lineage.index, i]
@@ -546,11 +519,11 @@ lineageMap <- function(data, core, csv = FALSE, file) {
     }
   }
 
-  # Telomeric # Right -> ----
+  # Telomeric # Right -> ---- #
   for ( i in (core+1):sites ) {
 
     if ( allSame(data[, i]) ) {
-      Map[, i] <- Map[, i-1]
+      Map[, i] <- Map[, i - 1]
       next
     } else {
       lineages  <- names(sort(table(Map[, i - 1]), decreasing = TRUE) )
@@ -558,7 +531,6 @@ lineageMap <- function(data, core, csv = FALSE, file) {
       for ( k in 1:nlineages ) {
         lineage.index <- which(Map[, i - 1] == lineages[k])
         nextSNP <- data[lineage.index, i]
-
         if ( allSame(nextSNP) ) {
           Map[lineage.index, i] <- Map[lineage.index, i-1]
           next
@@ -578,7 +550,8 @@ lineageMap <- function(data, core, csv = FALSE, file) {
   }
 
   if ( csv ) {
-    write.csv(Map[order(Map[, 1]),], file = sprintf("%s_%s.csv", file, Sys.Date()),
+    write.csv(Map[order(Map[, 1L]),],
+              file = sprintf("%s_%s.csv", file, Sys.Date()),
               row.names = TRUE)
   }
 
@@ -637,11 +610,12 @@ lineageMap <- function(data, core, csv = FALSE, file) {
 #' @export plotSlideSNP
 plotSlideSNP <- function(x, y, breaks, ylabel, font, line.cols,
                          line.lty, save = FALSE, ...) {
-
-  if ( length(breaks) != length(line.cols) )
-    stop("Line Colours Missing!")
-  if ( length(breaks) != length(line.lty) )
-    stop("Line Types Missing!")
+  if ( length(breaks) != length(line.cols) ) {
+    usethis::ui_stop("Line Colours Missing!")
+  }
+  if ( length(breaks) != length(line.lty) ) {
+    usethis::ui_stop("Line Types Missing!")
+  }
   if ( save ) {
     file <- sprintf("WindowPlot_%s.pdf", Sys.Date())
     pdf(file, height = 8, width = 12, title = "SlidingSNPwindow")
@@ -654,16 +628,12 @@ plotSlideSNP <- function(x, y, breaks, ylabel, font, line.cols,
 }
 
 
-
-
-
 #' Sliding Window SNP Analysis (bp)
 #'
 #' Sliding window analysis for SNPs along chromosome based on base pair
 #' positions rather than SNP positions. Could be any vector of values.
 #'
-#' @param X Vector object containing data appropriate to be applied by
-#' `FUN`.
+#' @param X Vector object containing data appropriate to be applied by `FUN`.
 #' @param Pos Vector of base pair (SNP) positions to evaluate.
 #' @param bp Size of the window over which the `FUN` should be evaluated
 #' in number of base pairs. Equivalent to `window =` in
@@ -699,13 +669,14 @@ plotSlideSNP <- function(x, y, breaks, ylabel, font, line.cols,
 #'              line.cols = chr.cols,
 #'              line.lty = chr.lines,
 #'              save = FALSE)
+#' @importFrom usethis ui_stop
 #' @export slide.window.bp
 slide.window.bp <- function(X, Pos, bp, FUN) {
 
   M <- max(Pos)
   L <- M %/% bp
   if ( bp > M ) {
-    stop("Error: bp window too large!")
+    usethis::ui_stop("`bp` window too large!")
   }
   out1 <- numeric(L)
   out2 <- numeric(L)
@@ -724,33 +695,32 @@ slide.window.bp <- function(X, Pos, bp, FUN) {
 }
 
 
-###############################
+# --------------------- #
 # Function for Calculating
 # value of a sliding window
 # for simple functions
-################################
+# --------------------- #
 # The slide.window() function
 # window = size of window for analysis at each step
 # frame.skip = how far to jump to next window frame
 # X = vector for analysis
 # FUN = summary function over window values
-###########################################
+# -------------------------------------------- #
 
 #' Sliding Window SNP Analysis
 #'
 #' Sliding window analysis for SNPs along chromosome.
 #' Can be any vector of values.
 #'
-#' @param X Vector object containing data appropriate to be applied by
-#' \code{FUN}.
-#' @param window Size of the window over which the \code{FUN} should be
+#' @param X Vector object containing data appropriate to be applied by `FUN`.
+#' @param window Size of the window over which the `FUN` should be
 #' evaluated.
 #' @param frame.skip How far the window should jump from one iteration to the
 #' next. Default = 1.
 #' @param FUN The summary function that evaluates the numbers in the window,
-#' typically \code{mean} or \code{max}.
+#' typically `mean` or `max`.
 #' @return A list containing:
-#' \item{values}{The result of the application of \code{FUN} in each of the windows.}
+#' \item{values}{The result of the application of `FUN` in each of the windows.}
 #' \item{midpoints}{The midpoint of the window, used primarily for plotting.}
 #' \item{length}{How many 'windows' were evaluated during the analysis.}
 #' @author Stu Field, Martin Donnelly
@@ -771,17 +741,15 @@ slide.window.bp <- function(X, Pos, bp, FUN) {
 #'      type = "s", col = "navy",
 #'      ylab = "-logP (max)",
 #'      xlab = "midpoints", lwd = 1.5)
-#' legend("topleft",
-#'        legend = format(paste("WindowSize =", Win)),
+#' legend("topleft", legend = format(paste("WindowSize =", Win)),
 #'        bg = "gray75", cex = 0.75, box.lty = 0)
+#' @importFrom usethis ui_warn
 #' @export slide.window
 slide.window <- function(X, window, frame.skip = 1, FUN) {
-
   L <- length(X)
-
   if ( window >= L ) {
     out <- FUN(X)
-    cat("Warning: window >= length(X)", "\n")
+    usethis::ui_warn("window >= length(X)")
     return(out)
   }
 
@@ -791,10 +759,11 @@ slide.window <- function(X, window, frame.skip = 1, FUN) {
   out1 <- numeric(length(hi))
   out2 <- numeric(length(hi))
 
-  for (i in 1:length(hi)) {
+  for ( i in 1:length(hi) ) {
     win <- lo[i]:hi[i]
-    if (win[window] > L)
+    if (win[window] > L) {
       break     # break if window hangs over end
+    }
     out1[i] <- FUN(X[win])
     out2[i] <- mean(range(P[win]))   # calculate position midpoint
   }
@@ -836,17 +805,16 @@ slide.window <- function(X, window, frame.skip = 1, FUN) {
 #'
 #' This data frame is then used by the [gplots::plotCI()] function
 #' plot the EHH plot with bootstrap CI95 errors.
-#' @note Requires the \code{gplots} package.
+#' @note Requires the \pkg{gplots} package.
 #' @note If the bootstrap confidence interval is very short
 #' relative to the point estimate, [gplots::plotCI()] will give the
 #' warning: `In arrows(...): zero-length arrow is of indeterminate
 #' angle and so skipped`.
 #' @author Stu Field, Martin Donnelly
-#' @seealso \code{\link{boot.pop}}, [HeBootstrapFUN()],
-#' gplots::plotCI()], [lineageMap()], [quantile()]
+#' @seealso [boot.pop()], [HeBootstrapFUN()], [gplots::plotCI()],
+#' [lineageMap()], [quantile()]
 #' @references "Kenyan_SNP_EHH_Data.csv"
 #' @examples
-#'
 #' head(KenyaSNP_EHHdata)   # pkg data
 #'
 #' # Subset data sets by Leu/Ser
@@ -855,8 +823,8 @@ slide.window <- function(X, window, frame.skip = 1, FUN) {
 #'
 #' SNPboot(data.Leu, nBoot = 50, core = 21)  # nBoot >500 recommended
 #' SNPboot(data.Ser, nBoot = 25, core = 21)
-#'
 #' @importFrom gplots plotCI
+#' @importFrom graphics box axis
 #' @export SNPboot
 SNPboot <- function(x, nBoot, core, lo = 0.025, up = 0.975, pts = 19,
                     hist = FALSE, plot = TRUE, csv = FALSE, file) {
@@ -867,13 +835,13 @@ SNPboot <- function(x, nBoot, core, lo = 0.025, up = 0.975, pts = 19,
   # Calculate Point Estimate Haplotype Homozygosity
   EstHH <- NA
   for ( z in 2:cols ) {
-    EstHH[z-1] <- ( (sum(as.vector(table(x[, z]))^2) / n) - 1) / (n - 1)
+    EstHH[z - 1] <- ( (sum(as.vector(table(x[, z]))^2) / n) - 1) / (n - 1)
   }
 
   # Create Bootstrap Samples
   for ( bt in 1:nBoot ) {
     if ( bt%%10 == 0 ) {
-      cat("Bootstrap ...", bt, "\n")
+      usethis::ui_done("Bootstrap ... {ui_value(bt)}")
     }
 
     boot_vec <- sample(1:nrow(x), replace = TRUE)   # select bootstraps indices
@@ -889,7 +857,7 @@ SNPboot <- function(x, nBoot, core, lo = 0.025, up = 0.975, pts = 19,
 
     for ( j in 2:cols ) {        # 1st col is factor (skip)
       counts <- as.vector(table(BootSamplePop[, j]))
-      EH[j-1] <- ( (sum(counts^2) / n) - 1) / (n - 1)
+      EH[j - 1] <- ((sum(counts^2) / n) - 1) / (n - 1)
     }
 
     if ( bt == 1 ) {
@@ -905,7 +873,7 @@ SNPboot <- function(x, nBoot, core, lo = 0.025, up = 0.975, pts = 19,
   upper  <- apply(BootHH, 2, quantile, probs = up)
 
   ret <- data.frame(cbind(EstHH, lower, upper))
-  names(ret) <- c("Est H-H","2.5%","97.5%")
+  names(ret) <- c("Est H-H", "2.5%", "97.5%")
   rownames(ret) <- 1:(cols - 1)
 
   if ( csv ) {
@@ -914,13 +882,12 @@ SNPboot <- function(x, nBoot, core, lo = 0.025, up = 0.975, pts = 19,
 
   if ( plot ) {
     plotCI(x = 1:(cols-1), y = ret[, "Est H-H"],
-           li = ret[,"2.5%"], ui = ret[, "97.5%"],
+           li = ret[, "2.5%"], ui = ret[, "97.5%"],
            pch = pts, gap = 0, cex = 0.85, xaxt = "n", xlab = "",
            ylab = "Extended Haplotype Homozygosity")
-    box()
-    axis(1, at = seq(1, cols-1, by = 2), cex.axis = 0.85,
-         labels = seq(-core+1, cols-1-core, by = 2))
+    graphics::box()
+    graphics::axis(1, at = seq(1, cols-1, by = 2), cex.axis = 0.85,
+                   labels = seq(-core+1, cols-1-core, by = 2))
   }
   ret
 }
-

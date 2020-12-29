@@ -7,8 +7,7 @@
 slide.window.bp(X, Pos, bp, FUN)
 }
 \arguments{
-\item{X}{Vector object containing data appropriate to be applied by
-`FUN`.}
+\item{X}{Vector object containing data appropriate to be applied by `FUN`.}
 
 \item{Pos}{Vector of base pair (SNP) positions to evaluate.}
 

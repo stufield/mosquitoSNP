@@ -7,21 +7,20 @@
 slide.window(X, window, frame.skip = 1, FUN)
 }
 \arguments{
-\item{X}{Vector object containing data appropriate to be applied by
-\code{FUN}.}
+\item{X}{Vector object containing data appropriate to be applied by `FUN`.}
 
-\item{window}{Size of the window over which the \code{FUN} should be
+\item{window}{Size of the window over which the `FUN` should be
 evaluated.}
 
 \item{frame.skip}{How far the window should jump from one iteration to the
 next. Default = 1.}
 
 \item{FUN}{The summary function that evaluates the numbers in the window,
-typically \code{mean} or \code{max}.}
+typically `mean` or `max`.}
 }
 \value{
 A list containing:
-\item{values}{The result of the application of \code{FUN} in each of the windows.}
+\item{values}{The result of the application of `FUN` in each of the windows.}
 \item{midpoints}{The midpoint of the window, used primarily for plotting.}
 \item{length}{How many 'windows' were evaluated during the analysis.}
 }
@@ -45,8 +44,7 @@ plot(data.out$values ~ data.out$midpoints,
      type = "s", col = "navy",
      ylab = "-logP (max)",
      xlab = "midpoints", lwd = 1.5)
-legend("topleft",
-       legend = format(paste("WindowSize =", Win)),
+legend("topleft", legend = format(paste("WindowSize =", Win)),
        bg = "gray75", cex = 0.75, box.lty = 0)
 }
 \seealso{

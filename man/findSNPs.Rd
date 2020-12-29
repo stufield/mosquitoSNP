@@ -11,10 +11,9 @@ findSNPs(x)
 }
 \value{
 A list containing:
-\item{Data }{The raw data reorganized as a matrix. Individuals as rows.
-Loci as cols}
-\item{Individuals }{Number of individuals in the data set. Equal to
-nrows}
+\item{Data}{The raw data reorganized as a matrix. Individuals as rows.
+  Loci as columns.}
+\item{Individuals }{Number of individuals in the data set. Equal to `nrows`.}
 \item{Length}{Length of the SNP sequence. Equal to ncol}
 \item{nSNP}{Number of SNPs in the data set}
 \item{SNPs}{Position of the SNP loci, identified by the col number}
